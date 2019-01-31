@@ -37,7 +37,7 @@ public class GloableStorage {
 		DATABUFFER.clear();
 	}
 
-	public AbsJsonConvert<? extends DefaultDevicePacket> getConvertInStorage(int logotype, int address,
+	public synchronized AbsJsonConvert<? extends DefaultDevicePacket> getConvertInStorage(int logotype, int address,
 			AbsJsonConvert<?> c) {
 		if (DATABUFFER.get(logotype) == null) {
 			HashMap<Integer, AbsJsonConvert<?>> map = new HashMap<Integer, AbsJsonConvert<?>>();
