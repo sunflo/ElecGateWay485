@@ -1,22 +1,15 @@
 package com.heshun.modbus.ui;
 
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Label;
-import java.awt.TextArea;
-import java.awt.TextField;
+import com.heshun.modbus.common.Constants;
+import com.heshun.modbus.util.ELog;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-
-import com.heshun.modbus.common.Constants;
-import com.heshun.modbus.util.ELog;
+import static java.awt.TextArea.SCROLLBARS_VERTICAL_ONLY;
 
 public class ControlPanel {
 	// static ControlPanel window = null;
@@ -28,7 +21,7 @@ public class ControlPanel {
 	private Button mBtnClear = new Button();
 	private Button mBtnLock = new Button();
 	private Button mBtnFlush = new Button();
-	private TextArea mTvLogs = new TextArea();
+	private TextArea mTvLogs = new TextArea("",0,0,SCROLLBARS_VERTICAL_ONLY);
 	private JList<String> mJList = new JList<>();
 	private JScrollPane mScrollPane = new JScrollPane(mJList);
 
