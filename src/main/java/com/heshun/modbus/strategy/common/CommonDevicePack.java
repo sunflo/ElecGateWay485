@@ -9,7 +9,7 @@ import java.util.Map;
 public class CommonDevicePack extends DefaultDevicePacket {
     public DeviceDriver mDriver;
 
-    public CommonDevicePack(int address, DeviceDriver driver) {
+    CommonDevicePack(int address, DeviceDriver driver) {
         super(address);
         mDriver = driver;
         for (Map.Entry<String, DriverItem> entry : driver.entrySet()) {
