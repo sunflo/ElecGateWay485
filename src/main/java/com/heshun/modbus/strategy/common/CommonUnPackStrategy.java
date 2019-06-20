@@ -77,4 +77,9 @@ public class CommonUnPackStrategy extends Abs485UnpackStrategy<CommonDevicePack,
     public CommonDeviceConvert initConvert(int address) {
         return new CommonDeviceConvert(new CommonDevicePack(address, mDriver));
     }
+
+    @Override
+    protected String getLogTag() {
+        return mDriver.getName();
+    }
 }
