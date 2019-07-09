@@ -35,8 +35,6 @@ public class SystemHelper {
 
 	public static ScheduledExecutorService mHttpRequestThreadPool = Executors.newScheduledThreadPool(8);
 
-	private static TotalQueryTask mTask;
-
 	/**
 	 * 开启tcp端口的监听，在1048端口
 	 */
@@ -75,7 +73,7 @@ public class SystemHelper {
 			ELog.getInstance().log(String.format("%s号站，设备配置：%s", logotype, str));
 			String[] _devices = str.split("#");
 			// List<Device> devices = new ArrayList<Device>();
-			HashMap<Integer, Device> devices = new HashMap<Integer, Device>();
+			HashMap<Integer, Device> devices = new HashMap<>();
 			for (String m : _devices) {
 				// 用双斜杠注释。。
 				if (m.trim().startsWith("//"))
@@ -97,8 +95,8 @@ public class SystemHelper {
 		}
 	}
 
-	public static void initTotalQuery(OnProgressChangeListener mProgressListener) {
-		mTask = new TotalQueryTask(mProgressListener);
+	static void initTotalQuery(OnProgressChangeListener mProgressListener) {
+		TotalQueryTask mTask = new TotalQueryTask(mProgressListener);
 		ELog.getInstance().log("远端主机连接成功，初始化查询线程。。。。。。");
 		ELog.getInstance().log("开始查询任务");
 		mTask.start();
@@ -110,9 +108,6 @@ public class SystemHelper {
 
 	}
 
-	public static TotalQueryTask getCurrentTask() {
-		return mTask;
-	}
 
 	public static void loadConfig(TextField mTfPort) throws IOException, com.alibaba.fastjson.JSONException {
 		FileInputStream fis = null;
