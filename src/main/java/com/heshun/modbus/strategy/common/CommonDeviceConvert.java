@@ -9,8 +9,15 @@ import java.util.Map;
 
 public class CommonDeviceConvert extends AbsJsonConvert<CommonDevicePack> {
 
-    CommonDeviceConvert(CommonDevicePack packet) {
+    private HarmonicExtraInfoConvertDelegate mDelegate;
+
+    CommonDeviceConvert(CommonDevicePack packet, HarmonicExtraInfoConvertDelegate delegate) {
         super(packet);
+        mDelegate = delegate;
+    }
+
+    CommonDeviceConvert(CommonDevicePack packet) {
+        this(packet, null);
     }
 
     @Override
@@ -25,8 +32,10 @@ public class CommonDeviceConvert extends AbsJsonConvert<CommonDevicePack> {
         for (Map.Entry<String, Object> entry : mPacket.entrySet()) {
             String key = entry.getKey();
             DriverItem rule = mDriver.get(key);
-
             json.put(rule.getTag(), withRatio(entry.getValue(), rule.getRatio()));
+        }
+        if (mDelegate != null) {
+            return mDelegate.handle(json);
         }
         return json;
     }

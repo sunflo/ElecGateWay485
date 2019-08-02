@@ -55,35 +55,14 @@ public class Constants {
 	 */
 	public final static int MIN_READBUFFER_SIZE = 20 * 2048;
 
-	// public static String SERVER_ = "http://test.jsclp.cn/";
-	// public static String SERVER_ = "http://172.31.59.62:9004/";
-	public static String SERVER_ = "http://dsm.gate.jsclp.cn/";
-	/**
-	 * 配电，环境监控后台domain
-	 */
-	public static String ENVIRO_SERVER_PRFIX = "http://pd.jsclp.cn/";
-	// public static String TEMP_ACTION =
-	// "http://172.31.59.62:9000/dsm/api/front/insertTempedata";
-	private static String ELEC_ACTION = "dsm/api/front/insertdata";
-	private static String TEMP_ACTION = "dsm/api/front/insertTempedata";
-	// private static String ENVIRO_ACTION =
-	// "dsm/api/front/insertEnvironmentData";
-	private static String ENVIRO_SERVER_ACTION = "pd/api/front/insertEnvironmentData";
-	private static String BATCH_ACTION = "dsm/api/front/insertDataBach";
 
-	// private static String BATCH_ACTION = "dsmV2/api/front/insertDataBach";
+	public static String SERVER_ = "http://dsm.gate.jsclp.cn/";
+
+	public static String ENVIRO_SERVER_ACTION = "pd/api/front/insertEnvironmentData";
+	public static String BATCH_ACTION = "dsm/api/front/insertDataBach";
 
 	public static String getBathUrl() {
 		return SERVER_ + BATCH_ACTION;
-	}
-
-	public static String getTempUrl() {
-		return SERVER_ + TEMP_ACTION;
-	}
-
-	public static String getElecUrl() {
-
-		return SERVER_ + ELEC_ACTION;
 	}
 
 	public static String getEnviroUrl() {
