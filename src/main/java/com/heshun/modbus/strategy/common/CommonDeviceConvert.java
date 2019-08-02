@@ -28,14 +28,14 @@ public class CommonDeviceConvert extends AbsJsonConvert<CommonDevicePack> {
     @Override
     public JSONObject toJsonObj(int logoType) {
         JSONObject json = super.toJsonObj(logoType);
+        if (mDelegate != null) {
+            return mDelegate.handle(json, mPacket);
+        }
         DeviceDriver mDriver = mPacket.mDriver;
         for (Map.Entry<String, Object> entry : mPacket.entrySet()) {
             String key = entry.getKey();
             DriverItem rule = mDriver.get(key);
             json.put(rule.getTag(), withRatio(entry.getValue(), rule.getRatio()));
-        }
-        if (mDelegate != null) {
-            return mDelegate.handle(json);
         }
         return json;
     }
