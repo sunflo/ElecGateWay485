@@ -4,6 +4,7 @@ import com.heshun.modbus.common.Config;
 import com.heshun.modbus.helper.SystemHelper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -109,10 +110,7 @@ public class Utils {
 
     /**
      * 字节数组转int
-     *
-     * @param 字节数组
-     * @param offset 偏移量
-     * @return int
+
      */
     public static int byteArrayToInt(byte[] b, int offset) {
         int value = 0;
@@ -292,13 +290,18 @@ public class Utils {
     /**
      * /dri/%s.dr
      */
-    public static File getConfigFile(String path) {
+    public static File getConfigFile(String path, String fileName) throws FileNotFoundException {
+        try {
+            if (Config.isDebug)
+                return new File("src/main/resource/" + path + "/" + fileName);
+            else {
+                File dir = new File(SystemHelper.class.getResource("/").getPath());
+                File dri = new File(dir, path);
 
-        if (Config.isDebug)
-            return new File("src/main/resource" + path);
-        else
-            return new File(SystemHelper.class.getResource(path).getPath());
-
-
+                return new File(dri, fileName);
+            }
+        } catch (NullPointerException e) {
+            throw new FileNotFoundException(path);
+        }
     }
 }
