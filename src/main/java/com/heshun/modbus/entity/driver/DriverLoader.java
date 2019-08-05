@@ -163,7 +163,7 @@ public class DriverLoader {
         OutputStreamWriter fileWriter = null;
 
         try {
-            fis = new FileInputStream(Utils.getConfigFile("dri", String.format("%s.tmp", oFileName)));
+            fis = new FileInputStream(Utils.getConfigFile("dri", String.format("%s.dr", oFileName)));
             byte[] buffer = new byte[fis.available()];
             fis.read(buffer);
             String origin = new String(buffer);

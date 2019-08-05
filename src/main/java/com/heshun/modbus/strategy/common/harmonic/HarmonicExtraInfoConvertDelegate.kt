@@ -1,19 +1,25 @@
-package com.heshun.modbus.strategy.common
+package com.heshun.modbus.strategy.common.harmonic
 
 import com.alibaba.fastjson.JSONObject
-import com.heshun.modbus.entity.DefaultDevicePacket
+import com.heshun.modbus.strategy.common.CommonDevicePack
+import com.heshun.modbus.strategy.common.IntfExtraInfoDelegate
 
 /**
  * 用于处理谐波信息的代理方，将采集到的数据中，涉及到谐波的部分内容，按要求打包数据
  */
-class HarmonicExtraInfoConvertDelegate<T : DefaultDevicePacket> : IntfExtraInfoDelegate<T> {
-    override lateinit var mDevicePack: T
+class HarmonicExtraInfoConvertDelegate : IntfExtraInfoDelegate<CommonDevicePack> {
+    override fun handle(origin: JSONObject, pack: CommonDevicePack): JSONObject {
 
+        origin["harmonic"] = HarmonicDataWrapper(pack).filter()
 
-    override fun handle(json: JSONObject, pack: T): JSONObject {
-
-
-        return json
+        val mDriver = pack.mDriver
+        for (entry in pack.entries) {
+            val key = entry.key
+            val rule = mDriver[key]
+            if (rule != null)
+                origin[rule.tag] = withRatio(entry.value, rule.ratio)
+        }
+        return origin
     }
 
     private fun withRatio(o: Any, ratio: Int) =

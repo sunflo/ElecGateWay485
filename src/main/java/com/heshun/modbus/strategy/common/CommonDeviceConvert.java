@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.heshun.modbus.entity.AbsJsonConvert;
 import com.heshun.modbus.entity.driver.DeviceDriver;
 import com.heshun.modbus.entity.driver.DriverItem;
+import com.heshun.modbus.strategy.common.harmonic.HarmonicExtraInfoConvertDelegate;
 
 import java.util.Map;
 
