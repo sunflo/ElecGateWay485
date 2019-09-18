@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Deprecated
 public class DriverLoader {
 
     private static ConcurrentHashMap<String, DeviceDriver> mDriverContainer = new ConcurrentHashMap<>();
@@ -86,7 +87,7 @@ public class DriverLoader {
 
     }
 
-    public static DeviceDriver load(String _temp) {
+    public static DeviceDriver load1(String _temp) {
         String fileName = _temp.toLowerCase();
         if (mDriverContainer.containsKey(fileName))
             return mDriverContainer.get(fileName);
@@ -110,9 +111,17 @@ public class DriverLoader {
                 if (line.startsWith("#") || line.startsWith("//") || TextUtils.isEmpty(line)) continue;
                 else if (line.startsWith("[")) {
                     if (line.endsWith("]")) {
-                        String mask = line.substring(1, line.length() - 1);
+                        String mask = line.substring(1, line.length() - 1).trim();
                         if (!TextUtils.isEmpty(mask))
-                            driver.setMask(mask.trim());
+                            if (mask.contains(",")) {
+                                String[] split = mask.split(",");
+                                driver.setMask(split[0]);
+                                driver.setContainsHarmonic(Boolean.parseBoolean(split[1]));
+                            } else {
+                                driver.setMask(mask.trim());
+                            }
+
+
                     }
                 } else if (line.startsWith("@")) {
                     driver.addCommand(new CommandBuilder(line.substring(1)));
