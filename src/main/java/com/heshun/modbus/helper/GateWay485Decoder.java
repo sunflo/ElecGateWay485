@@ -8,7 +8,7 @@ import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
 import com.heshun.modbus.entity.Device;
-import com.heshun.modbus.entity.PacketCrcIllagelException;
+import com.heshun.modbus.entity.PacketCrcIllegalException;
 import com.heshun.modbus.strategy.Abs485UnpackStrategy;
 import com.heshun.modbus.strategy.DecodeStrategyFactory;
 import com.heshun.modbus.util.ELog;
@@ -16,9 +16,9 @@ import com.heshun.modbus.util.SessionUtils;
 
 /**
  * 报文解析器
- * 
+ *
  * @author huangxz
- * 
+ *
  */
 public class GateWay485Decoder extends CumulativeProtocolDecoder {
 
@@ -82,7 +82,7 @@ public class GateWay485Decoder extends CumulativeProtocolDecoder {
 				Object msg = mUnPacker.unPack();
 				if (msg != null)
 					out.write(msg);
-			} catch (PacketCrcIllagelException e) {
+			} catch (PacketCrcIllegalException e) {
 				// CRC校验未通过的情况，暂时未开放
 				e.printStackTrace();
 			}

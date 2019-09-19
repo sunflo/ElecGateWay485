@@ -8,7 +8,7 @@ import org.apache.mina.filter.codec.ProtocolEncoder;
 
 /**
  * 网关组包，拆包工厂
- * 
+ *
  * @author huangxz
  *
  */

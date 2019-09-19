@@ -95,16 +95,18 @@ public class SystemHelper {
         }
     }
 
+   static TotalQueryTask mTask;
+
     static void initTotalQuery(OnProgressChangeListener mProgressListener) {
-        TotalQueryTask mTask = new TotalQueryTask(mProgressListener);
+        mTask = new TotalQueryTask(mProgressListener);
         ELog.getInstance().log("远端主机连接成功，初始化查询线程。。。。。。");
         ELog.getInstance().log("开始查询任务");
-        mTask.start();
+//        mTask.start();
     }
 
     public static void startQuery() {
-        // ELog.getInstance().log("开始查询任务");
-        // mTask.start();
+        ELog.getInstance().log("开始查询任务");
+        mTask.start();
 
     }
 
