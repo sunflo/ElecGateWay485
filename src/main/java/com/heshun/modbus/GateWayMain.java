@@ -3,7 +3,7 @@ package com.heshun.modbus;
 import com.heshun.modbus.common.Constants;
 import com.heshun.modbus.common.GlobalStorage;
 import com.heshun.modbus.entity.AbsJsonConvert;
-import com.heshun.modbus.entity.driver.DriverLoader;
+import com.heshun.modbus.entity.driver.DeviceDriverLoader;
 import com.heshun.modbus.helper.SystemHelper;
 import com.heshun.modbus.service.TotalQueryTask.OnProgressChangeListener;
 import com.heshun.modbus.ui.ControlPanel;
@@ -104,7 +104,7 @@ public class GateWayMain {
             public void onFlush() {
                 String devName = JOptionPane.showInputDialog(null, "型号", "清除设备驱动缓存", 1);
                 if (!devName.isEmpty()) {
-                    boolean unload = DriverLoader.unload(devName);
+                    boolean unload = DeviceDriverLoader.unload(devName);
                     ELog.getInstance().log(String.format("清除设备驱动 [%s] 缓存-->>  %s ", devName, unload));
                 }
             }
