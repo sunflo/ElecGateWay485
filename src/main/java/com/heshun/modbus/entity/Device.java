@@ -1,17 +1,16 @@
 package com.heshun.modbus.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.heshun.modbus.entity.driver.CommandBuilder;
 import com.heshun.modbus.entity.driver.DeviceDriver;
-import com.heshun.modbus.entity.driver.DriverLoader;
-import org.apache.mina.core.session.IoSession;
-
+import com.heshun.modbus.entity.driver.DeviceDriverLoader;
 import com.heshun.modbus.util.ELog;
 import com.heshun.modbus.util.SessionUtils;
 import com.heshun.modbus.util.Utils;
+import org.apache.mina.core.session.IoSession;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Device {
     public String model;
@@ -37,7 +36,7 @@ public class Device {
 
     private void genRequestPack(String type) {
         requestPack = new ArrayList<>();
-        DeviceDriver driver = DriverLoader.load(type);
+        DeviceDriver driver = DeviceDriverLoader.load(type);
         if (driver != null) {
             for (CommandBuilder c : driver.getCommands())
                 requestPack.add(c.generate(vCpu));
@@ -79,10 +78,6 @@ public class Device {
                 requestPack.add(Utils.fetchRequest(vCpu, 3, 0x54, 6));
                 break;
             case "disd683":
-                requestPack.add(Utils.fetchRequest(vCpu, 3, 14, 11));
-                requestPack.add(Utils.fetchRequest(vCpu, 3, 26, 17));
-                requestPack.add(Utils.fetchRequest(vCpu, 3, 54, 6));
-                break;
             case "yh396e":
                 requestPack.add(Utils.fetchRequest(vCpu, 3, 14, 11));
                 requestPack.add(Utils.fetchRequest(vCpu, 3, 26, 17));
