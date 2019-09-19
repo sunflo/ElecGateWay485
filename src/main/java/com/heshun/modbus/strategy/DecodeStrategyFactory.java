@@ -1,7 +1,7 @@
 package com.heshun.modbus.strategy;
 
 import com.heshun.modbus.entity.Device;
-import com.heshun.modbus.entity.driver.DriverLoader;
+import com.heshun.modbus.entity.driver.DeviceDriverLoader;
 import com.heshun.modbus.strategy.acrel.aem96.AEM96Strategy;
 import com.heshun.modbus.strategy.acrel.c.PZ96LE4CStrategy;
 import com.heshun.modbus.strategy.acrel.h.PZ96LE4HStrategy;
@@ -27,7 +27,7 @@ public class DecodeStrategyFactory {
             return new DefaultUnPackStrategy(session, data);
         }
         String model = d.model.trim();
-        if (DriverLoader.load(model) != null)
+        if (DeviceDriverLoader.load(model) != null)
             return new CommonUnPackStrategy(session, data, model);
         switch (model) {
             // 同力无线测温
