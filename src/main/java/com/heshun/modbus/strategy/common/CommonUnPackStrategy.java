@@ -1,8 +1,8 @@
 package com.heshun.modbus.strategy.common;
 
 import com.heshun.modbus.entity.driver.DeviceDriver;
+import com.heshun.modbus.entity.driver.DeviceDriverLoader;
 import com.heshun.modbus.entity.driver.DriverItem;
-import com.heshun.modbus.entity.driver.DriverLoader;
 import com.heshun.modbus.strategy.Abs485UnpackStrategy;
 import com.heshun.modbus.util.Utils;
 import org.apache.mina.core.buffer.IoBuffer;
@@ -19,7 +19,7 @@ public class CommonUnPackStrategy extends Abs485UnpackStrategy<CommonDevicePack,
 
     public CommonUnPackStrategy(IoSession s, IoBuffer b, String deviceModel) {
         super(s, b);
-        mDriver = DriverLoader.load(deviceModel);
+        mDriver = DeviceDriverLoader.load(deviceModel);
     }
 
     @Override
@@ -70,12 +70,12 @@ public class CommonUnPackStrategy extends Abs485UnpackStrategy<CommonDevicePack,
 
     @Override
     public CommonDeviceConvert getConvert(CommonDevicePack packet) {
-        return new CommonDeviceConvert(packet);
+        return new CommonDeviceConvert(packet, mDriver.isContainsHarmonic());
     }
 
     @Override
     public CommonDeviceConvert initConvert(int address) {
-        return new CommonDeviceConvert(new CommonDevicePack(address, mDriver));
+        return new CommonDeviceConvert(new CommonDevicePack(address, mDriver), mDriver.isContainsHarmonic());
     }
 
     @Override
