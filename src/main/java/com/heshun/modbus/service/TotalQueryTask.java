@@ -45,32 +45,34 @@ public class TotalQueryTask {
 
     public void start() {
 
-        if (!isStart) {
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    for (; ; ) {
-                        List<CommandPack> commands = initCommandQueue();
-                        for (int i = 0, j = commands.size(); i < j; i++) {
-                            sendCommandviaSession(commands.get(i));
-                            if (null != mProgressListener)
-                                updateProgress(i, j);
-                        }
-                        isStart = true;
-                        if (isFirst)
-                            startFeedBackLoop();
-                        try {
-                            ELog.getInstance().log(String.format("完成一次查询周期，等待[%s]秒", Constants.REMOTE_SENSING_GAP));
-                            Thread.sleep(Constants.REMOTE_SENSING_GAP);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+        if (isStart) {
+            ELog.getInstance().log("查询任务已经开始。。。。。");
+            return;
+        }
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for (; ; ) {
+                    List<CommandPack> commands = initCommandQueue();
+                    for (int i = 0, j = commands.size(); i < j; i++) {
+                        sendCommandviaSession(commands.get(i));
+                        if (null != mProgressListener)
+                            updateProgress(i, j);
+                    }
+
+                    if (isFirst)
+                        startFeedBackLoop();
+                    try {
+                        ELog.getInstance().log(String.format("完成一次查询周期，等待[%s]秒", Constants.REMOTE_SENSING_GAP));
+                        Thread.sleep(Constants.REMOTE_SENSING_GAP);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
-            }, 3000);
-        } else {
-            ELog.getInstance().log("查询任务已经开始。。。。。");
-        }
+            }
+        }, 3000);
+        isStart = true;
     }
 
     private void updateProgress(int i, int j) {

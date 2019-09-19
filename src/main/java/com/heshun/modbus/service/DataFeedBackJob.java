@@ -1,5 +1,6 @@
 package com.heshun.modbus.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.heshun.modbus.common.Constants;
 import com.heshun.modbus.common.GlobalStorage;
@@ -46,7 +47,7 @@ public class DataFeedBackJob implements Job {
                     jo.put("ip", logotype);
                     jo.put("data", datas);
                     ELog.getInstance().log(
-                            String.format("%s周期组包数据====|\r\n %s", logotype, JSONObject.toJSONString(jo)), logotype);
+                            String.format("%s周期组包数据====|\r\n %s", logotype, JSON.toJSONString(jo)), logotype);
 
                     ELog.getInstance().log(HttpUtils.post(Constants.getEnviroUrl(), jo), logotype);
 
