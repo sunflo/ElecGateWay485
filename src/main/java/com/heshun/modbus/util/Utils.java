@@ -71,9 +71,9 @@ public class Utils {
         arr[6] = bs[2];
         arr[7] = bs[3];
 
-        return (long) (((long) (arr[0] & 0xff) << 56) | ((long) (arr[1] & 0xff) << 48) | ((long) (arr[2] & 0xff) << 40)
+        return ((long) (arr[0] & 0xff) << 56) | ((long) (arr[1] & 0xff) << 48) | ((long) (arr[2] & 0xff) << 40)
                 | ((long) (arr[3] & 0xff) << 32) | ((long) (arr[4] & 0xff) << 24) | ((long) (arr[5] & 0xff) << 16)
-                | ((long) (arr[6] & 0xff) << 8) | ((long) (arr[7] & 0xff)));
+                | ((long) (arr[6] & 0xff) << 8) | ((long) (arr[7] & 0xff));
     }
 
     public static byte[] getBytes(short s) {
@@ -302,6 +302,14 @@ public class Utils {
             }
         } catch (NullPointerException e) {
             throw new FileNotFoundException(path);
+        }
+    }
+    public static File getConfigDir() {
+        if (Config.isDebug) {
+            return new File("src/main/resource/dri");
+        } else {
+            File dir = new File(SystemHelper.class.getResource("/").getPath());
+            return new File(dir, "dri");
         }
     }
 }

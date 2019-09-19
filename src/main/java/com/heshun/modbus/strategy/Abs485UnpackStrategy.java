@@ -9,7 +9,7 @@ import org.apache.mina.core.session.IoSession;
 import com.heshun.modbus.common.GlobalStorage;
 import com.heshun.modbus.entity.AbsJsonConvert;
 import com.heshun.modbus.entity.DefaultDevicePacket;
-import com.heshun.modbus.entity.PacketCrcIllagelException;
+import com.heshun.modbus.entity.PacketCrcIllegalException;
 import com.heshun.modbus.util.ELog;
 import com.heshun.modbus.util.SessionUtils;
 
@@ -22,7 +22,7 @@ public abstract class Abs485UnpackStrategy<T extends DefaultDevicePacket, V exte
         this.mSession = s;
     }
 
-    public V unPack() throws PacketCrcIllagelException {
+    public V unPack() throws PacketCrcIllegalException {
         ELog.getInstance().log(String.format("原始报文[%s]:\n %s", getLogTag(), mBuffer.getHexDump()), mSession);
         return getConvert(doUnpack());
     }
@@ -32,10 +32,10 @@ public abstract class Abs485UnpackStrategy<T extends DefaultDevicePacket, V exte
         return simpleName.replace("Strategy", "");
     }
 
-    protected T doUnpack() throws PacketCrcIllagelException {
+    protected T doUnpack() throws PacketCrcIllegalException {
         // 预留CRC校验方法,后期可能要加上容错机制
         if (!validateCrc())
-            throw new PacketCrcIllagelException();
+            throw new PacketCrcIllegalException();
 
         int address = (int) mBuffer.get();
         int command = (int) mBuffer.get();

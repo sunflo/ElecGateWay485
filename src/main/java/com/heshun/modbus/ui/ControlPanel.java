@@ -134,7 +134,7 @@ public class ControlPanel {
 		mPanel.add(mTfPort);
 
 		mLbCount.setBounds(610, 465, 730, 10);
-		mLbCount.setText("online:123");
+		mLbCount.setText("online:--");
 		mPanel.add(mLbCount);
 
 		mProgressBar.setBounds(70, 470, 450, 5);

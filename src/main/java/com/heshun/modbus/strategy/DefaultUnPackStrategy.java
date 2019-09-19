@@ -7,7 +7,7 @@ import org.apache.mina.core.session.IoSession;
 
 import com.heshun.modbus.entity.DefaultConvert;
 import com.heshun.modbus.entity.DefaultDevicePacket;
-import com.heshun.modbus.entity.PacketCrcIllagelException;
+import com.heshun.modbus.entity.PacketCrcIllegalException;
 import com.heshun.modbus.util.ELog;
 
 /**
@@ -38,7 +38,7 @@ public class DefaultUnPackStrategy extends Abs485UnpackStrategy<DefaultDevicePac
 	}
 
 	@Override
-	protected DefaultDevicePacket doUnpack() throws PacketCrcIllagelException {
+	protected DefaultDevicePacket doUnpack() throws PacketCrcIllegalException {
 		ELog.getInstance().log("设备回复乱码如下：" + mBuffer.getHexDump(), mSession);
 		// 消费掉所有未处理报文即刻
 		mBuffer.position(mBuffer.limit());
