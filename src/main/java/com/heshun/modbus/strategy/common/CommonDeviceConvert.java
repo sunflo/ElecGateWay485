@@ -12,13 +12,14 @@ public class CommonDeviceConvert extends AbsJsonConvert<CommonDevicePack> {
 
     private HarmonicExtraInfoConvertDelegate mDelegate;
 
-    CommonDeviceConvert(CommonDevicePack packet, HarmonicExtraInfoConvertDelegate delegate) {
+    CommonDeviceConvert(CommonDevicePack packet, boolean harmonic) {
         super(packet);
-        mDelegate = delegate;
+        if (harmonic)
+            mDelegate = new HarmonicExtraInfoConvertDelegate();
     }
 
     CommonDeviceConvert(CommonDevicePack packet) {
-        this(packet, null);
+        this(packet, false);
     }
 
     @Override
@@ -29,9 +30,8 @@ public class CommonDeviceConvert extends AbsJsonConvert<CommonDevicePack> {
     @Override
     public JSONObject toJsonObj(int logoType) {
         JSONObject json = super.toJsonObj(logoType);
-        if (mDelegate != null) {
+        if (mDelegate != null)
             return mDelegate.handle(json, mPacket);
-        }
         DeviceDriver mDriver = mPacket.mDriver;
         for (Map.Entry<String, Object> entry : mPacket.entrySet()) {
             String key = entry.getKey();
