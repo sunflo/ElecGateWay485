@@ -10,6 +10,7 @@ import com.heshun.modbus.util.Utils
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import java.util.*
+import java.util.concurrent.TimeUnit
 import com.heshun.modbus.util.ELog.getInstance as g
 
 class DataFeedBackJob : Job {
@@ -39,7 +40,7 @@ class DataFeedBackJob : Job {
                         }
                     }
 
-                }, 500, java.util.concurrent.TimeUnit.MILLISECONDS)
+                }, 500,  TimeUnit.MILLISECONDS)
             }
 
         }
