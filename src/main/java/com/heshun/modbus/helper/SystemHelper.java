@@ -95,7 +95,7 @@ public class SystemHelper {
         }
     }
 
-   static TotalQueryTask mTask;
+    static TotalQueryTask mTask;
 
     static void initTotalQuery(OnProgressChangeListener mProgressListener) {
         mTask = new TotalQueryTask(mProgressListener);
@@ -131,6 +131,7 @@ public class SystemHelper {
             int sesing_gap = _config.getIntValue("remote_sesing_gap_ms");
             int request_gap = _config.getIntValue("request_send_gap_ms");
             int feed_gap = _config.getIntValue("feed_back_delay_gap_s");
+            int feed_interval = _config.getIntValue("feed_back_interval_min");
             String version = _config.getString("version");
             String logPath = _config.getString("log_path");
 
@@ -145,6 +146,7 @@ public class SystemHelper {
             Constants.COMMAND_TIME_GAP_IN_SESSION = request_gap;
             Constants.REMOTE_SENSING_GAP = sesing_gap;
             Constants.FEED_BACK_DELAY = feed_gap;
+            Constants.FEED_BACK_INTERVAL = feed_interval;
             Constants.GATEWAY_VERSION = version;
             Constants.LOG_OUT_PATH = logPath;
 
