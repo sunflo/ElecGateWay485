@@ -104,7 +104,7 @@ public class TotalQueryTask {
         Scheduler scheduler;
 
         Trigger t = TriggerBuilder.newTrigger().withIdentity("feed", "group1").startNow()
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(5).repeatForever()).build();
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(Constants.FEED_BACK_INTERVAL).repeatForever()).build();
 
         JobDetail job = JobBuilder.newJob(DataFeedBackJob.class).withIdentity("job", "group1").build();
 
