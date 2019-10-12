@@ -312,4 +312,13 @@ public class Utils {
             return new File(dir, "dri");
         }
     }
+
+    public static File getDbCacheDir() {
+        if (Config.isDebug) {
+            return new File("src/main/resource/db");
+        } else {
+            File dir = new File(SystemHelper.class.getResource("/").getPath());
+            return new File(dir, "dri");
+        }
+    }
 }
