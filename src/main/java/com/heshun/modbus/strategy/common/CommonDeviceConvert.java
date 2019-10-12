@@ -30,8 +30,12 @@ public class CommonDeviceConvert extends AbsJsonConvert<CommonDevicePack> {
     @Override
     public JSONObject toJsonObj(int logoType) {
         JSONObject json = super.toJsonObj(logoType);
-        if (mDelegate != null)
-            return mDelegate.handle(json, mPacket);
+        if (mDelegate != null) {
+            //clone一份数据，保留原始数据！！！
+            CommonDevicePack _temp = new CommonDevicePack(mPacket.address, mPacket.mDriver);
+            _temp.putAll(mPacket);
+            return mDelegate.handle(json, _temp);
+        }
         DeviceDriver mDriver = mPacket.mDriver;
         for (Map.Entry<String, Object> entry : mPacket.entrySet()) {
             String key = entry.getKey();
