@@ -34,32 +34,35 @@ class DeviceDriverLoader {
                 configFile = decrypt(fileName).apply {
                     readLines().forEach {
                         val line = it.trim()
-                        if (line.startsWith("#") || line.startsWith("//") || TextUtils.isEmpty(line)) {
-                            //注释，do nothing
-                        } else if (line.startsWith("[") && line.endsWith("]")) {
-                            val mask = line.substring(1, line.length - 1).trim()
-                            if (mask.isNotEmpty())
-                                if (mask.contains(",")) {
-                                    val split = mask.split(",")
-                                    driver.mask = split[0]
-                                    driver.isContainsHarmonic = java.lang.Boolean.parseBoolean(split[1])
-                                } else {
-                                    driver.mask = mask.trim()
-                                }
-                        } else if (line.startsWith("@")) {
-                            driver.addCommand(CommandBuilder(line.substring(1)))
-                        } else {
-                            driver.register(DriverItem(line))
+                        when {
+                            line.startsWith("#") || line.startsWith("//") || TextUtils.isEmpty(line) -> {
+                            }
+                            line.startsWith("[") && line.endsWith("]") -> {
+                                val mask = line.substring(1, line.length - 1).trim()
+                                if (mask.isNotEmpty())
+                                    if (mask.contains(",")) {
+                                        val split = mask.split(",")
+                                        driver.mask = split[0]
+                                        driver.isContainsHarmonic = java.lang.Boolean.parseBoolean(split[1])
+                                    } else {
+                                        driver.mask = mask.trim()
+                                    }
+                            }
+                            line.startsWith("@") -> {
+                                driver.addCommand(CommandBuilder(line.substring(1)))
+                            }
+                            else -> {
+                                driver.register(DriverItem(line))
+                            }
                         }
-                    }
-                }
+                    }                }
                 if (driver.size > 0) {
                     mDriverContainer[fileName] = driver
                     return driver
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                ELog.getInstance().err(String.format("加载驱动失败，请检查驱动文件[%s.dr]是否正常", fileName))
+                ELog.getInstance().err("加载驱动失败，请检查驱动文件[$fileName.dr]是否正常")
                 return null
             } finally {
                 configFile?.let {
@@ -73,8 +76,8 @@ class DeviceDriverLoader {
         @JvmStatic
         internal fun decrypt(oFileName: String): File {
             try {
-                return Utils.getConfigFile("dri", String.format("%s.tmp", oFileName)).apply {
-                    writeText(Utils.getConfigFile("dri", String.format("%s.dr", oFileName)).readText().let {
+                return Utils.getConfigFile("dri", "$oFileName.tmp").apply {
+                    writeText(Utils.getConfigFile("dri", "$oFileName.dr").readText().let {
                         URLDecoder.decode(decoder(it.substring(DK[2])), "UTF-8").run {
                             URLDecoder.decode(decoder(this.substring(DK[0], this.length - DK[1] - DK[3]) + this.substring(this.length - DK[3])), "UTF-8")
                         }
